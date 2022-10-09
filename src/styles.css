@@ -1,0 +1,75 @@
+/* Add application styles & imports to this file! */
+
+:root {
+  --container-bg: #5d447e;
+  --font-color: aquamarine;
+  --error-color: red;
+  --hover-color: grey;
+  box-sizing: border-box;
+}
+
+.calculate-btn {
+  border-radius: 20%;
+}
+.calculate-reset {
+  border-radius: 0%;
+  padding-left: 1rem;
+  margin-left: 0rem;
+}
+.container {
+  color: var(--font-color);
+  display: flex;
+  --flex-flow: row wrap;
+  justify-content: space-around;
+  background-color: var(--container-bg);
+  padding-bottom: 2rem;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+}
+
+.container h3 {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.pace-selectbox {
+  margin-left: 0.5rem;
+}
+
+#calc-pace:hover,
+#calc-reset:hover {
+  cursor: pointer;
+  color: rgb(255, 0, 0);
+}
+
+.errors {
+  margin-top: 1rem;
+  color: var(--error-color);
+  height: 2rem;
+}
+
+.input-time-val {
+  width: 2rem;
+  margin-left: 0.5rem;
+}
+
+.calcUse {
+  background-color: goldenrod;
+}
+
+.control-group {
+  line-height: 2rem;
+}
+
+#calc-reset,
+#time-reset,
+#dist-reset,
+#pace-reset {
+  background-color: var(--hover-color);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.5rem;
+}
+
+#calc-reset {
+  margin-left: 2rem;
+}
