@@ -1,14 +1,3 @@
 node_modules
-.angular\cache
+.angular
 dist
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/0.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/1.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/2.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/index.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/index.pack.old
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/0.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/index.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/0.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/0.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/0.pack
-.angular/cache/14.2.5/angular-webpack/a54c16706d084172293c9a9a6e49cb1a823fdb87/index.pack
