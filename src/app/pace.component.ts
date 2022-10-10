@@ -48,7 +48,7 @@ export class PaceComponent implements OnInit {
 
   US_MILES = ['Miles', '5miles', '8miles', 'Marathon', 'Half Marathon'];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     console.log('ngOnInit');
@@ -253,12 +253,12 @@ export class PaceComponent implements OnInit {
       (!hasDist && hasPace && !hasTime) || // only pace
       (!hasDist && !hasPace && hasTime) // only time
     ) {
-      this.errorMessage = 'Provide exactly 2 of distance, time or pace';
+      this.errorMessage = 'Enter any 2 to calculate the third';
       return false;
     }
 
     if (hasDist && hasTime && hasPace) {
-      this.errorMessage = 'Provide only 2 of distance, time or pace';
+      this.errorMessage = 'Enter only 2 of distance, time or pace';
       return false;
     }
 
