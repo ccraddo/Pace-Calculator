@@ -2,10 +2,10 @@
   <form class="form-horizontal">
     <div class="row-fluid ">
       <div class="span12 pace-calc-name">
-        <h3>Pace</h3>
+        <h3>Pace+</h3>
         <h3>Calculator</h3>
         <!-- <p class="sub-text">
-          Enter any two to calculate pace, time or distance
+          Any two to calculate the third
         </p> -->
       </div>
     </div>
@@ -52,7 +52,7 @@
         </select>
       </div>
     </div>
-    <div class="errors">
+    <div [ngClass]="validForm ? 'message' : 'errors' ">
       <ul>
         {{
         errorMessage
@@ -62,7 +62,7 @@
     <div class="row-fluid">
       <div class="span12">
         <button id="calc-pace" type="button" class="btn btn-warning" (click)="calculate()">
-          Calculate {{ calcType }}
+          Calculate
         </button>
         <span id="calc-reset" class="calculate-reset"><a (click)="reset()">Reset</a></span>
       </div>

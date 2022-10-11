@@ -3,7 +3,7 @@
 :root {
   --container-bg: #5d447e;
   --font-color: aquamarine;
-  --error-color: red;
+  --error-color:  rgb(253, 103, 103);
   --hover-color: grey;
   box-sizing: border-box;
 }
@@ -35,15 +35,22 @@ margin-bottom: 0;
   margin-left: 0.5rem;
 }
 
-#calc-pace:hover,
+#time-reset:hover,
+#dist-reset:hover,
+#pace-reset:hover,
 #calc-reset:hover {
   cursor: pointer;
-  color: rgb(255, 0, 0);
+  color: rgb(253, 103, 103);
 }
 
 .errors {
   margin-top: 1rem;
   color: var(--error-color);
+  height: 2rem;
+}
+.message {
+  margin-top: 1rem;
+  color: var(--font-color);
   height: 2rem;
 }
 
@@ -65,7 +72,8 @@ margin-bottom: 0;
 #dist-reset,
 #pace-reset {
   background-color: var(--hover-color);
-  padding: 0.1rem 0.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   border-radius: 0.5rem;
 }
 
@@ -75,7 +83,7 @@ margin-bottom: 0;
 
 .pace-calc-name {
   margin-top: 1rem;
- margin-bottom: 1rem;
+  margin-bottom: 1rem;
   line-height: 1rem;
   text-align: center;
 }

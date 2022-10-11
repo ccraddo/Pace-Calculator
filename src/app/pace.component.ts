@@ -21,14 +21,10 @@ export class PaceComponent implements OnInit {
   public paceSeconds: number = null;
   public paceType: string = 'miles';
 
-  // General vars
-  public errorMessage = '';
-  public calcType: string = '';
-
   // Constants
   HRS = 60 * 60; // sec in an hour
   MINS = 60; // sec in a minute
-
+  MESSAGE = "Enter any 2 to calculate the third"
   SEPARATOR = '------------------';
   DISTANCE_OPTIONS = [
     'Kilometers',
@@ -47,6 +43,12 @@ export class PaceComponent implements OnInit {
   METRIC_KM = ['Kilometers', '5k', '10k'];
 
   US_MILES = ['Miles', '5miles', '8miles', 'Marathon', 'Half Marathon'];
+
+
+  // General vars
+  public errorMessage = this.MESSAGE;
+  public calcType: string = '';
+  public validForm = true;
 
   constructor() { }
 
@@ -227,7 +229,8 @@ export class PaceComponent implements OnInit {
 
   resetOther() {
     this.calcType = '';
-    this.errorMessage = '';
+    this.errorMessage = this.MESSAGE;
+    this.validForm = true;
   }
 
   validInput(): boolean {
@@ -253,16 +256,19 @@ export class PaceComponent implements OnInit {
       (!hasDist && hasPace && !hasTime) || // only pace
       (!hasDist && !hasPace && hasTime) // only time
     ) {
-      this.errorMessage = 'Enter any 2 to calculate the third';
+      this.errorMessage = this.MESSAGE;
+      this.validForm = false;
       return false;
     }
 
     if (hasDist && hasTime && hasPace) {
       this.errorMessage = 'Enter only 2 of distance, time or pace';
+      this.validForm = false;
       return false;
     }
 
-    this.errorMessage = '';
+    this.errorMessage = this.MESSAGE;
+    this.validForm = true;
     return true;
   }
 
