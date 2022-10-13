@@ -6,7 +6,9 @@
   --error-color:  rgb(253, 103, 103);
   --hover-color: grey;
   box-sizing: border-box;
+  font-size: 1.4rem;
 }
+
 
 .calculate-btn {
   border-radius: 20%;
@@ -49,7 +51,8 @@ margin-bottom: 0;
   height: 2rem;
 }
 .message {
-  margin-top: 1rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
   color: var(--font-color);
   height: 2rem;
 }
@@ -64,6 +67,8 @@ margin-bottom: 0;
 }
 
 .control-group {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
   line-height: 2rem;
 }
 
@@ -90,6 +95,6 @@ margin-bottom: 0;
 
 @media (min-width: 576px){
 .pace-container {
-    max-width: 540px;
+    max-width: 900px;
 }
 }
