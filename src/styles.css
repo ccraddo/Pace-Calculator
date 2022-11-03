@@ -46,7 +46,8 @@ margin-bottom: 0;
 }
 
 .errors {
-  margin-top: 1rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
   color: var(--error-color);
   height: 2rem;
 }
@@ -82,6 +83,10 @@ margin-bottom: 0;
   border-radius: 0.5rem;
 }
 
+.display-6{
+  line-height: 1.5;
+}
+
 #calc-reset {
   margin-left: 2rem;
 }
@@ -93,8 +98,27 @@ margin-bottom: 0;
   text-align: center;
 }
 
-@media (min-width: 576px){
+ @media (min-width: 576px){
 .pace-container {
-    max-width: 900px;
+    max-width: 1000px;
 }
+} 
+
+.time-box {
+  display: grid;
+  justify-items: center;
+}
+
+.hms-box{
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+#calc-pace{
+  background-color:  goldenrod;
+  border-radius: 0.5rem;
+
 }

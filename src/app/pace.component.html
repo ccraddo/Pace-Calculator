@@ -2,29 +2,53 @@
   <form class="form-horizontal">
     <div class="row-fluid ">
       <div class="span12 pace-calc-name">
-        <h3>Pace+</h3>
-        <h3>Calculator</h3>
+        <div class="display-5">Pace+ Calculator</div>
+        <!-- <h3>Calculator</h3> -->
         <!-- <p class="sub-text">
           Any two to calculate the third
         </p> -->
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label">Time<span class="calculate-reset"><a id="time-reset"
+      <label class="display-6">Time<span class="calculate-reset"><a id="time-reset"
             (click)="timeReset()">Reset</a></span></label>
-      <div [ngClass]="calcType == 'Time' ? 'calcUse' : ''" class="form-control form-control-sm">
-        <label><input class="input-time-val" [(ngModel)]="timeHours" placeholder="" type="number" name="time-hours"
-            min="0" max="59" value="{{ timeHours }}" />-hrs</label>
-        <label><input class="input-time-val" [(ngModel)]="timeMinutes" type="number" name="time-minutes" min="0"
-            max="59" value="{{ timeMinutes }}" />-min</label>
-        <label><input class="input-time-val" [(ngModel)]="timeSeconds" type="number" name="time-seconds" min="0"
-            max="59" value="{{ timeSeconds }}" />-sec</label>
+      <div [ngClass]="calcType == 'Time' ? 'calcUse' : ''" class="form-control form-control-lg">
+        <span class="hms-box">
+          <div class="time-box">
+            <div>
+              <label>hrs</label>
+            </div>
+            <div>
+              <input id="tth" class="input-time-val" [(ngModel)]="timeHours" placeholder="" type="number"
+                name="time-hours" min="0" max="59" value="{{ timeHours }}" />
+            </div>
+          </div>
+          <div class="time-box">
+            <div>
+              <label>min</label>
+            </div>
+            <div>
+              <input id="ttm" class="input-time-val" [(ngModel)]="timeMinutes" type="number" name="time-minutes" min="0"
+                max="59" value="{{ timeMinutes }}" />
+            </div>
+
+          </div>
+          <div class="time-box">
+            <div>
+              <label>sec</label>
+            </div>
+            <div>
+              <input id="tts" class="input-time-val" [(ngModel)]="timeSeconds" type="number" name="time-seconds" min="0"
+                max="59" value="{{ timeSeconds }}" />
+            </div>
+          </div>
+        </span>
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label">Distance
+      <label class="display-6">Distance
         <span class="calculate-reset"><a id="dist-reset" (click)="distReset()">Reset</a></span></label>
-      <div [ngClass]="calcType == 'Distance' ? 'calcUse' : ''" class="form-control form-control-sm">
+      <div [ngClass]="calcType == 'Distance' ? 'calcUse' : ''" class="form-control form-control-lg">
         <label><input [(ngModel)]="distance" type="number" name="distance" min="0" max="10000"
             value="{{ distance }}" /></label>
         <select name="distance-type" class="pace-selectbox" [(ngModel)]="distanceType"
@@ -36,20 +60,39 @@
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label">Pace<span class="calculate-reset"><a id="pace-reset"
+      <label class="display-6">Pace<span class="calculate-reset"><a id="pace-reset"
             (click)="paceReset()">Reset</a></span></label>
-      <div [ngClass]="calcType == 'Pace' ? 'calcUse' : ''" class="form-control form-control-sm">
-        <label><input class="input-time-val" [(ngModel)]="paceHours" type="number" name="pace-hours" min="0" max="59"
-            value="{{ paceHours }}" />-hrs</label>
-        <label><input class="input-time-val" [(ngModel)]="paceMinutes" type="number" name="pace-minutes" min="0"
-            max="59" value="{{ paceMinutes }}" />-min</label>
-        <label><input class="input-time-val" [(ngModel)]="paceSeconds" type="number" name="pace-seconds" min="0"
-            max="59" value="{{ paceSeconds }}" />-sec</label>
-        <select [(ngModel)]="paceType" (change)="convertPace($event)" name="pace-type" class="pace-selectbox"
-          value="{{ paceType }}">
-          <option value="km">per Km</option>
-          <option value="miles" selected>per Mile</option>
-        </select>
+      <div [ngClass]="calcType == 'Pace' ? 'calcUse' : ''" class="form-control form-control-lg">
+        <span class="hms-box">
+          <div class="time-box">
+            <div>hrs</div>
+            <div>
+              <input class="input-time-val" [(ngModel)]="paceHours" type="number" name="pace-hours" min="0" max="59"
+                value="{{ paceHours }}" />
+            </div>
+          </div>
+          <div class="time-box">
+            <div>min</div>
+            <div>
+              <input class="input-time-val" [(ngModel)]="paceMinutes" type="number" name="pace-minutes" min="0" max="59"
+                value="{{ paceMinutes }}" />
+            </div>
+          </div>
+          <div class="time-box">
+            <div>sec</div>
+            <div>
+              <input class="input-time-val" [(ngModel)]="paceSeconds" type="number" name="pace-seconds" min="0" max="59"
+                value="{{ paceSeconds }}" />
+            </div>
+          </div>
+          <div class="time-box">
+            <select [(ngModel)]="paceType" (change)="convertPace($event)" name="pace-type" class="pace-selectbox"
+              value="{{ paceType }}">
+              <option value="km">per Km</option>
+              <option value="miles" selected>per Mile</option>
+            </select>
+          </div>
+        </span>
       </div>
     </div>
     <div [ngClass]="validForm ? 'message' : 'errors' ">
@@ -59,9 +102,9 @@
         }}
       </ul>
     </div>
-    <div class="row-fluid">
-      <div class="span12">
-        <button id="calc-pace" type="button" class="btn btn-warning" (click)="calculate()">
+    <div>
+      <div class="span12 display-6">
+        <button id="calc-pace" type="button" class="btn-lg btn-lg-warning" (click)="calculate()">
           Calculate
         </button>
         <span id="calc-reset" class="calculate-reset"><a (click)="reset()">Reset</a></span>
