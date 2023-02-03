@@ -7,4 +7,16 @@ import { Component, VERSION } from '@angular/core';
 })
 export class AppComponent {
   name = 'Pace Calculations';
+
+  gOnInit() {
+
+  }
+
+}
+export interface ClockTimeData {
+  time: string,
+  distance: number,
+  unit: string,
+  dateDone: string;
+  dateSaved: string
 }

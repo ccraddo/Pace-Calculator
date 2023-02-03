@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CloudDataService } from 'src/services/clouddata.service';
+import { Common } from 'src/shared/common';
+import { Activity } from 'src/shared/model';
 
 @Component({
   selector: 'pace',
@@ -20,6 +23,8 @@ export class PaceComponent implements OnInit {
   public paceMinutes: number = null;
   public paceSeconds: number = null;
   public paceType: string = 'miles';
+  // data vars
+  public selectedDate: string;
 
   // Constants
   HRS = 60 * 60; // sec in an hour
@@ -50,10 +55,23 @@ export class PaceComponent implements OnInit {
   public calcType: string = '';
   public validForm = true;
 
-  constructor() { }
+  constructor(
+    private common: Common,
+    public cloudData: CloudDataService<Activity>,
+
+  ) {
+    this.selectedDate = this.common.formatDate(new Date());
+  }
 
   ngOnInit() {
     console.log('ngOnInit');
+    console.log(`current date ${this.selectedDate}`);
+
+
+    // login to google to get user id
+    // set id in localstorage
+    // call cloudstorage to get time
+    // 
   }
 
   timeInSeconds(): number {
@@ -370,5 +388,14 @@ export class PaceComponent implements OnInit {
       case 'Time':
         this.calculateTotalTime();
     }
+  }
+
+  loadData() {
+    // sign in & set google id
+    // 
+    this.cloudData.getClockTimeData<Activity>(new Date(this.selectedDate + " 00:00:00")).subscribe(ctd => {
+      if (ctd.time) { }
+
+    });
   }
 }

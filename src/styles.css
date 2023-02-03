@@ -9,6 +9,12 @@
   font-size: 1.4rem;
 }
 
+.load-data {
+  font-size: 2rem;
+  background-color: #daa520;
+  border-radius: 0.5rem;
+  line-height: 2rem;
+}
 
 .calculate-btn {
   border-radius: 20%;
