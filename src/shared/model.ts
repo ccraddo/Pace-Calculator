@@ -3,7 +3,8 @@ export interface ClockTimeData {
   distance: number,
   unit: string,
   dateDone: string;
-  dateSaved: string
+  dateSaved: string;
+  location: string;
 }
 
 export interface Activity {
@@ -12,6 +13,7 @@ export interface Activity {
   distance: number    // 3
   time: string;       //"29:00"
   unit: string;       // course "3miles"
+  location: string; // Rockmill
 }
 
 export const MY_CLOUD_TOKEN = 'timr-';
@@ -23,6 +25,8 @@ export const CLOCK_TIME_DATA_TOKEN = MY_CLOUD_TOKEN + 'clocktimedata';
 export const SEPARATOR = '----------------';
 
 export const DISTANCE_OPTIONS = [
+  'Workout',
+  'Stretch',
   '1mile',
   '2miles',
   '3miles',

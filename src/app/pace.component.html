@@ -2,10 +2,16 @@
   <form class="form-horizontal">
     <div class="row-fluid ">
       <div class="span12 pace-calc-name">
-        <div class="display-5">Pace+ Calculator</div>
-        <button type="button" class="btn-lg btn-lg-warning load-data" (click)="loadData()">
-          02/02/23
-        </button>
+        <div class="display-5 m-4">Pace++ Calculator</div>
+        <div class="span12">
+          <i class="bi bi-caret-left-square display-5 m-3" (click)="dateMove(-1)"></i>
+          <span class="span2"></span>
+          <button type="button" class="btn-lg btn-lg-warning load-data" (click)="logInWithGoogle()">
+            {{selectedDate}}
+          </button>
+          <span class="span2"></span>
+          <i class="bi bi-caret-right-square display-5 m-3" (click)="dateMove(1)"></i>
+        </div>
         <!-- <h3>Calculator</h3> -->
         <!-- <p class="sub-text">
           Any two to calculate the third
@@ -51,12 +57,12 @@
     <div class="control-group">
       <label class="display-6">Distance
         <span class="calculate-reset"><a id="dist-reset" (click)="distReset()">Reset</a></span></label>
-      <div [ngClass]="calcType == 'Distance' ? 'calcUse' : ''" class="form-control form-control-lg">
-        <label><input [(ngModel)]="distance" type="number" name="distance" min="0" max="10000"
-            value="{{ distance }}" /></label>
+      <div [ngClass]="calcType == 'Distance' ? 'calcUse' : ''" class="form-control form-control-lg ">
+        <label><input [(ngModel)]="distance" type="number" name="distance" min="0" max="10000" value="{{ distance }}"
+            class="text-center distance-input" /></label>
         <select name="distance-type" class="pace-selectbox" [(ngModel)]="distanceType"
           (change)="checkStandardDistances($event)">
-          <option *ngFor="let option of DISTANCE_OPTIONS; let i = index" [value]="option">
+          <option class="text-center" *ngFor="let option of DISTANCE_OPTIONS; let i = index" [value]="option">
             {{ option }}
           </option>
         </select>

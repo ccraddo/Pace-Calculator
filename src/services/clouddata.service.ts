@@ -18,6 +18,7 @@ export class CloudDataService<T> {
   }
 
   _emptyActivity: Activity = {
+    location: '',
     dateDone: '',
     dateSaved: '',
     distance: 0,
@@ -37,7 +38,7 @@ export class CloudDataService<T> {
     return this._id;
   };
 
-  saveClockData(data: T, noDate: boolean = false) {
+  saveClockData2(data: T, noDate: boolean = false, session: number) {
     if (!this.userId) return;
     const now = new Date();
     let d = null;
@@ -45,33 +46,31 @@ export class CloudDataService<T> {
       d = new Date((data as { dateDone: string }).dateDone + ' 00:00:00');
     const id = this.common.dataKey(d);
     (data as { dateSaved: string }).dateSaved = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-    this.afs.collection('activities').doc(this.userId).collection('clock').doc(id).set(data);
+    this.afs.collection('activities').doc(this.userId).collection('clock').doc(id).collection('sessions').doc(session.toString()).set(data);
   }
 
-  deleteClockData(date: Date) {
+  deleteClockData(date: Date, session: number) {
     if (!this.userId) return;
     let k = CLOCK_TIME_DATA_TOKEN + this.common.dataKey(date);
     console.log(`deleteClockData removing k=${k}`)
     const id = this.common.dataKey(date);
-    this.afs.collection('activities').doc(this.userId).collection('clock').doc(id).delete();
+    this.afs.collection('activities').doc(this.userId).collection('clock').doc(id).collection('sessions').doc(session.toString()).delete();
   }
 
-  getClockTimeData<T>(date: Date = new Date()): Observable<T> {
+  getClockTimeData2<T>(date: Date = new Date(), session: number): Observable<T> {
     if (!this.userId) return;
     const id = this.common.dataKey(date);
 
-    return this.afs.collection<T>('activities').doc(this.userId).collection('clock').doc(id).get().pipe(map(doc => {
-      if (doc.exists) {
-        this._cd = doc.data() as T;
-      } else {
-        this._cd = this._emptyActivity as T;
-      }
-      console.log(`getClockTimeData returning "${this._cd}"`);
-      return this._cd;
-    }), catchError(error => {
-      console.log(`getClockTimeData error returning "${error}"`);
-      return of(this._emptyActivity as T);
-    }));
+    let collectionRef = this.afs.collection<T>('activities').doc(this.userId).collection('clock').doc(id).collection('sessions');
+
+    return collectionRef.valueChanges().pipe(
+      map((acts) => {
+        if (acts?.length >= session) {
+          this._cd = acts[session - 1];
+        } else this._cd = [];
+        return this._cd as T
+      })
+    );
   }
 }
 

@@ -3,7 +3,7 @@
 // };
 
 export const environment = {
-  production: true,
+  production: false,
   firebase: {
     apiKey: "AIzaSyCCv7pxKGqlPko0_aJxSAnxSCa5Z5D4SH4",
     authDomain: "fir-auth-a74cd.firebaseapp.com",

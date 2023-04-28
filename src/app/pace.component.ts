@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
+import { AuthService } from 'src/services/auth.service';
 import { CloudDataService } from 'src/services/clouddata.service';
 import { Common } from 'src/shared/common';
-import { Activity } from 'src/shared/model';
+import { Activity, USER_GOOGLE_ID_TOKEN } from 'src/shared/model';
 
 @Component({
   selector: 'pace',
@@ -37,41 +38,41 @@ export class PaceComponent implements OnInit {
     'Meters',
     'Yards',
     this.SEPARATOR,
-    'Marathon',
-    'Half Marathon',
+    '3miles',
     '5miles',
     '8miles',
+    '13.1miles',
+    '26.2miles',
     '5k',
     '10k',
   ];
 
   METRIC_KM = ['Kilometers', '5k', '10k'];
 
-  US_MILES = ['Miles', '5miles', '8miles', 'Marathon', 'Half Marathon'];
+  US_MILES = ['Miles', '5miles', '8miles', '13.1miles', '26.2miles'];
 
 
   // General vars
   public errorMessage = this.MESSAGE;
   public calcType: string = '';
   public validForm = true;
+  public session = 1;
 
   constructor(
     private common: Common,
     public cloudData: CloudDataService<Activity>,
+    public auth: AuthService
 
   ) {
-    this.selectedDate = this.common.formatDate(new Date());
+    this.selectedDate = new Date().toLocaleDateString();
   }
 
   ngOnInit() {
     console.log('ngOnInit');
     console.log(`current date ${this.selectedDate}`);
 
+    this.logInWithGoogle();
 
-    // login to google to get user id
-    // set id in localstorage
-    // call cloudstorage to get time
-    // 
   }
 
   timeInSeconds(): number {
@@ -113,8 +114,11 @@ export class PaceComponent implements OnInit {
     else
       switch (this.distanceType) {
         case 'Miles':
+        case '3miles':
         case '5miles':
         case '8miles':
+        case '13.1miles':
+        case '26.2miles':
           factor = 1.6;
           break;
         case 'Yards':
@@ -148,7 +152,7 @@ export class PaceComponent implements OnInit {
 
       let hrs = Math.trunc(pace / this.HRS);
       let mins = Math.trunc((pace - hrs) / this.MINS);
-      let secs = Math.round(pace - hrs - mins * this.MINS);
+      let secs = Math.trunc(pace - hrs - mins * this.MINS);
       console.log(hrs, mins, secs);
       this.paceHours = hrs ? hrs : null;
       this.paceMinutes = mins;
@@ -365,16 +369,25 @@ export class PaceComponent implements OnInit {
       distanceType != 'Yards' &&
       distanceType != 'Kilometers' &&
       distanceType != 'Miles'
-    )
-      this.distance = 0;
+    ) { this.distance = 0; }
 
     // standard distances
-    if (distanceType == 'Marathon') this.distance = 26.2188;
-    if (distanceType == 'Half Marathon') this.distance = 26.2188 / 2;
-    if (distanceType == '5miles') this.distance = 5;
-    if (distanceType == '8miles') this.distance = 8;
-    if (distanceType == '5k') this.distance = 5;
-    if (distanceType == '10k') this.distance = 10;
+    // if (distanceType == '26.2miles') this.distance = 26.2188;
+    // if (distanceType == '13.1miles') this.distance = 26.2188 / 2;
+    // if (distanceType == '3miles') this.distance = 3;
+    // if (distanceType == '5miles') this.distance = 5;
+    // if (distanceType == '8miles') this.distance = 8;
+    // if (distanceType == '5k') this.distance = 5;
+    // if (distanceType == '10k') this.distance = 10;
+
+    this.distance = +this.numberPart(distanceType);
+
+    // console.log(`distanceType = ${this.numberPart(distanceType)}`)
+  }
+
+  numberPart(string): string {
+    let match = string.match(/^\d+(\.\d+)?/);
+    return match ? match[0] : null;
   }
 
   calculate() {
@@ -393,9 +406,78 @@ export class PaceComponent implements OnInit {
   loadData() {
     // sign in & set google id
     // 
-    this.cloudData.getClockTimeData<Activity>(new Date(this.selectedDate + " 00:00:00")).subscribe(ctd => {
-      if (ctd.time) { }
-
+    this.cloudData.getClockTimeData2<Activity>(new Date(this.selectedDate + " 00:00:00"), this.session).subscribe(ctd => {
+      if (ctd?.time) { }
+      this.populateFormData(ctd)
     });
+  }
+
+  logInWithGoogle() {
+    if (localStorage.getItem(USER_GOOGLE_ID_TOKEN)) {
+      console.log(`logged in already = ${localStorage.getItem(USER_GOOGLE_ID_TOKEN)}`);
+      this.loadData();
+    } else
+      this.auth.signInWithGoogle().then(s => {
+        console.log(`logged in s = ${s}`);
+        this.loadData();
+      })
+  }
+  parseTime(time: string): String[] {
+    let retArr = ['', '', ''];
+
+    if (time) {
+      let t = time.split(':');
+      console.log(t);
+      // 30 sec
+      if (t.length == 1) {
+        t[0] = t[0].toLowerCase().replace('sec', '').trim();
+        retArr[0] = '';
+        retArr[1] = '';
+        retArr[2] = t[0];
+      }
+      // 29:45
+      if (t.length == 2) {
+        retArr[0] = '';
+        retArr[1] = t[0];
+        retArr[2] = t[1];
+      }
+      // 01:45:23
+      if (t.length == 3) {
+        retArr[2] = t[2];
+        retArr[1] = t[1];
+        retArr[0] = t[0];
+      }
+
+      return retArr;
+    }
+  }
+
+  populateFormData(ctd: Activity) {
+    let t = this.parseTime(ctd.time) || ['0', '0', '0'];
+    this.timeSeconds = +t[2] || null;
+    this.timeMinutes = +t[1] || null;
+    this.timeHours = +t[0] || null;
+
+    this.distance = ctd.distance;
+
+    if (ctd.unit) {
+      if (ctd.unit.toLowerCase().includes('miles'))
+        this.distanceType = 'Miles'
+      else
+        if (!ctd.unit.toLocaleLowerCase().includes('workout') && ctd.unit.toLowerCase().includes('k'))
+          this.distanceType = 'Kilometers';
+        else
+          this.distanceType = ctd.unit;
+    }
+  }
+
+  dateMove(direction: number) {
+    console.log(`before move selected date ${this.selectedDate}`)
+    let nd = new Date(this.selectedDate + ' 00:00:00');
+    nd.setDate(nd.getDate() + direction);
+    this.selectedDate = nd.toLocaleDateString();
+    this.loadData();
+    this.reset();
+    console.log(`after move selected date ${this.selectedDate}`)
   }
 }

@@ -16,6 +16,9 @@
   line-height: 2rem;
 }
 
+label {
+  user-select: none;
+}
 .calculate-btn {
   border-radius: 20%;
 }
@@ -41,6 +44,11 @@ margin-bottom: 0;
 
 .pace-selectbox {
   margin-left: 0.5rem;
+  font-weight: bold;
+}
+
+.distance-input{
+  font-weight: bold;
 }
 
 #time-reset:hover,
@@ -67,6 +75,8 @@ margin-bottom: 0;
 .input-time-val {
   width: 2.5rem;
   margin-left: 0.5rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .calcUse {
@@ -104,11 +114,11 @@ margin-bottom: 0;
   text-align: center;
 }
 
- @media (min-width: 576px){
+ /* @media (min-width: 576px){
 .pace-container {
     max-width: 1080px;
 }
-} 
+}  */
 
 .time-box {
   display: grid;
