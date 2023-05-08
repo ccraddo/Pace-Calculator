@@ -138,3 +138,7 @@ margin-bottom: 0;
   border-radius: 0.5rem;
 
 }
+#date-version{
+  display: flex;
+  justify-content: center;
+}
