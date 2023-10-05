@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { AuthService } from 'src/services/auth.service';
 import { CloudDataService } from 'src/services/clouddata.service';
+import { FullScreenService } from 'src/services/full-screen.service';
 import { Common } from 'src/shared/common';
 import { Activity, USER_GOOGLE_ID_TOKEN } from 'src/shared/model';
 
@@ -33,6 +34,9 @@ export class PaceComponent implements OnInit {
   MESSAGE = "Enter any 2 to calculate the third"
   SEPARATOR = '------------------';
   DISTANCE_OPTIONS = [
+    'Workout',
+    'Stretch',
+    'Walk',
     'Kilometers',
     'Miles',
     'Meters',
@@ -57,15 +61,29 @@ export class PaceComponent implements OnInit {
   public calcType: string = '';
   public validForm = true;
   public session = 1;
+  isFullScreen = false;
 
   constructor(
     private common: Common,
     public cloudData: CloudDataService<Activity>,
-    public auth: AuthService
+    public auth: AuthService,
+    private fullScreenService: FullScreenService
 
   ) {
     this.selectedDate = new Date().toLocaleDateString();
   }
+
+  fullScreen(): void {
+    if (this.isFullScreen) {
+      this.fullScreenService.exitFullscreen();
+      this.isFullScreen = false;
+
+    } else {
+      this.fullScreenService.enterFullscreen();
+      this.isFullScreen = true;
+
+    }
+  };
 
   ngOnInit() {
     console.log('ngOnInit');
@@ -407,7 +425,6 @@ export class PaceComponent implements OnInit {
     // sign in & set google id
     // 
     this.cloudData.getClockTimeData2<Activity>(new Date(this.selectedDate + " 00:00:00"), this.session).subscribe(ctd => {
-      if (ctd?.time) { }
       this.populateFormData(ctd)
     });
   }
@@ -452,6 +469,13 @@ export class PaceComponent implements OnInit {
     }
   }
 
+  changeSession(direction: number) {
+    this.session = direction == -1 && this.session == 1 ? 1 : this.session + direction;
+    console.log(`getting new activity`);
+
+    this.loadData();
+  }
+
   populateFormData(ctd: Activity) {
     let t = this.parseTime(ctd.time) || ['0', '0', '0'];
     this.timeSeconds = +t[2] || null;
@@ -461,7 +485,7 @@ export class PaceComponent implements OnInit {
     this.distance = ctd.distance;
 
     if (ctd.unit) {
-      if (ctd.unit.toLowerCase().includes('miles'))
+      if (ctd.unit.toLowerCase().includes('mile'))
         this.distanceType = 'Miles'
       else
         if (!ctd.unit.toLocaleLowerCase().includes('workout') && ctd.unit.toLowerCase().includes('k'))
@@ -476,6 +500,7 @@ export class PaceComponent implements OnInit {
     let nd = new Date(this.selectedDate + ' 00:00:00');
     nd.setDate(nd.getDate() + direction);
     this.selectedDate = nd.toLocaleDateString();
+    this.session = 1;
     this.loadData();
     this.reset();
     console.log(`after move selected date ${this.selectedDate}`)

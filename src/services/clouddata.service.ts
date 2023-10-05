@@ -18,12 +18,14 @@ export class CloudDataService<T> {
   }
 
   _emptyActivity: Activity = {
-    location: '',
     dateDone: '',
     dateSaved: '',
     distance: 0,
     time: '00:00:00',
-    unit: ''
+    unit: '',
+    location: '',
+    notes: '',
+    id: '' // Auto assigned on retrieval from Firestore by valueChanges()
   }
 
   _cd!: any;
@@ -63,10 +65,19 @@ export class CloudDataService<T> {
 
     let collectionRef = this.afs.collection<T>('activities').doc(this.userId).collection('clock').doc(id).collection('sessions');
 
-    return collectionRef.valueChanges().pipe(
+    return collectionRef.valueChanges({ idField: 'id' }).pipe(
       map((acts) => {
-        if (acts?.length >= session) {
-          this._cd = acts[session - 1];
+        if (acts?.length > 0) {
+          this._cd = [];
+          acts.forEach(a => {
+            console.log(`loc = ${a.location} id = ${a.id}`);
+            if (Number(a.id) == session) {
+              this._cd = a;
+              return;
+            }
+          })
+
+          // this._cd = acts[session - 1];
         } else this._cd = [];
         return this._cd as T
       })

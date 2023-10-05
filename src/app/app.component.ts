@@ -7,11 +7,6 @@ import { Component, VERSION } from '@angular/core';
 })
 export class AppComponent {
   name = 'Pace Calculations';
-
-  gOnInit() {
-
-  }
-
 }
 export interface ClockTimeData {
   time: string,

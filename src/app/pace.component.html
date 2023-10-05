@@ -2,7 +2,7 @@
   <form class="form-horizontal">
     <div class="row-fluid ">
       <div class="span12 pace-calc-name">
-        <div class="display-5 m-4">Pace++ Calculator</div>
+        <div class="display-5 m-4" (click)="fullScreen()">Pace++ Calculator</div>
         <div class="span12">
           <i class="bi bi-caret-left-square display-5 m-3" (click)="dateMove(-1)"></i>
           <span class="span2"></span>
@@ -16,6 +16,18 @@
         <!-- <p class="sub-text">
           Any two to calculate the third
         </p> -->
+      </div>
+    </div>
+    <div class="form-control-lg session-div">
+      <label class="display-6">Session</label>
+      <div class="plus-minus">
+        <img class="minus" (click)="changeSession(-1)" src="/assets/icons8-minus-sign-24.png" alt="">
+      </div>
+      <div class="session ">
+        <input class="session-num" [(ngModel)]="session" type="number" name="session" value="{{ session }}" />
+      </div>
+      <div class="plus-minus">
+        <img class="plus" (click)="changeSession(1)" src="/assets/icons8-plus-sign-24.png" alt="">
       </div>
     </div>
     <div class="control-group">
@@ -121,4 +133,4 @@
     </div>
   </form>
 </div>
-<div id="date-version">23053101</div>
+<div id="date-version">230820-3</div>

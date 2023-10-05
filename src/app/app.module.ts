@@ -13,6 +13,7 @@ const routes: Routes = [
 ];
 
 import { RouterModule, Routes } from '@angular/router';
+import { FullScreenService } from 'src/services/full-screen.service';
 @NgModule({
   imports: [
     BrowserModule,
@@ -22,7 +23,7 @@ import { RouterModule, Routes } from '@angular/router';
   declarations: [AppComponent, PaceComponent],
   exports: [RouterModule],
   bootstrap: [AppComponent],
-  providers: [Common, AngularFirestoreModule]
+  providers: [Common, AngularFirestoreModule, FullScreenService]
 })
 export class AppModule {
 

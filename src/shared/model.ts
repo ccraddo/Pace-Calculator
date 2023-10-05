@@ -14,6 +14,8 @@ export interface Activity {
   time: string;       //"29:00"
   unit: string;       // course "3miles"
   location: string; // Rockmill
+  notes: string; // enterd on History page
+  id: string; // assigned when retrieved from Firestore
 }
 
 export const MY_CLOUD_TOKEN = 'timr-';
