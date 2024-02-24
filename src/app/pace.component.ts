@@ -55,7 +55,6 @@ export class PaceComponent implements OnInit {
 
   US_MILES = ['Miles', '5miles', '8miles', '13.1miles', '26.2miles'];
 
-
   // General vars
   public errorMessage = this.MESSAGE;
   public calcType: string = '';
@@ -464,7 +463,6 @@ export class PaceComponent implements OnInit {
         retArr[1] = t[1];
         retArr[0] = t[0];
       }
-
       return retArr;
     }
   }

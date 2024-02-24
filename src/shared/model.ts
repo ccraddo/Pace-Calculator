@@ -20,6 +20,8 @@ export interface Activity {
 
 export const MY_CLOUD_TOKEN = 'timr-';
 
+
+
 export const USER_GOOGLE_ID_TOKEN = MY_CLOUD_TOKEN + 'ggl-id';
 
 export const CLOCK_TIME_DATA_TOKEN = MY_CLOUD_TOKEN + 'clocktimedata';
@@ -45,3 +47,4 @@ export const DISTANCE_OPTIONS = [
   'Meters',
   'Yards'
 ];
+

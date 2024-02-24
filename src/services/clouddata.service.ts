@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Timestamp } from 'firebase/firestore';
 import { CLOCK_TIME_DATA_TOKEN, USER_GOOGLE_ID_TOKEN } from '../shared/model';
 import { Common } from '../shared/common';
 import { Activity } from '../shared/model';
@@ -83,5 +84,6 @@ export class CloudDataService<T> {
       })
     );
   }
+
 }
 
